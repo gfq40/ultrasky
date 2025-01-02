@@ -7,9 +7,11 @@
 
   <!-- Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" />
+  <link 
+    rel="stylesheet" 
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" 
+  />
   <link rel="manifest" href="manifest.json" />
-
   
   <style>
     :root {
@@ -42,6 +44,51 @@
       color: var(--color-text-main);
       overflow-x:hidden;
       transition: background var(--transition-speed), color var(--transition-speed);
+    }
+
+    /* OVERLAY SCELTA MODALITÀ */
+    #mode-selection-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; 
+      height: 100vh;
+      background: rgba(0,0,0,0.85);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 100000;
+      text-align: center;
+      color: #fff;
+      animation: fadeIn var(--transition-speed) ease forwards;
+    }
+    #mode-selection-overlay h2 {
+      margin-bottom: 20px;
+      font-size: 1.8rem;
+    }
+    #mode-selection-overlay p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      max-width: 300px;
+    }
+    #mode-selection-overlay button {
+      margin: 5px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 30px;
+      background: var(--color-title-blu);
+      color: #fff;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #mode-selection-overlay button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+    @keyframes fadeIn {
+      0% { opacity:0; transform:scale(0.95); }
+      100%{ opacity:1; transform:scale(1); }
     }
 
     /* HEADER */
@@ -105,10 +152,6 @@
       box-shadow:0 4px 15px rgba(0,0,0,0.7);
       animation: fadeIn var(--transition-speed) ease;
     }
-    @keyframes fadeIn {
-      from { opacity:0; transform:scale(0.95);}
-      to   { opacity:1; transform:scale(1);}
-    }
     .menu-list {
       list-style:none;
       margin:0; 
@@ -167,9 +210,26 @@
       line-height:1.5;
     }
 
+    /* PULSANTE TORNA ALLA SCELTA */
+    #btn-back-selection {
+      display:none;
+      margin-top:15px; 
+      background:var(--color-border); 
+      border:1px solid var(--color-border); 
+      border-radius:20px; 
+      padding:8px 16px; 
+      color:#fff;
+      cursor:pointer;
+      transition:transform 0.2s;
+    }
+    #btn-back-selection:hover {
+      transform:scale(1.05);
+      box-shadow:0 4px 10px rgba(0,0,0,0.3);
+    }
+
     /* ULTRSKY 20 SCHEDE */
     .exhibition-list {
-      display:flex;
+      display:none; /* default nascosto, mostriamo da JS */
       flex-wrap:wrap;
       gap:25px;
       justify-content:center;
@@ -277,9 +337,54 @@
       color: var(--color-text-main);
       cursor:pointer;
       transition:transform 0.2s;
+      font-size:1rem; /* dimensione del pulsante "Torna alla Home" */
     }
     .back-btn:hover {
       transform:scale(1.05);
+    }
+
+    /* GIOCHI RAGAZZI */
+    #kids-game-section {
+      display:none;
+      text-align:center;
+      margin-top:30px;
+    }
+    #kids-game-section h2 {
+      margin-top: 80px; 
+      margin-bottom: 10px;
+    }
+    .games-btns {
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin-bottom:20px;
+      margin-top:12px;
+    }
+    .games-btns button {
+      background: var(--color-border);
+      border:1px solid var(--color-border);
+      border-radius:20px;
+      padding:8px 16px;
+      color: #fff;
+      font-size:0.875rem;
+      cursor:pointer;
+      transition:transform 0.2s, box-shadow 0.2s;
+    }
+    .games-btns button:hover {
+      transform:scale(1.05);
+      box-shadow:0 3px 8px rgba(0,0,0,0.4);
+    }
+    .game-area {
+      display:none; 
+      margin-top:10px;
+      background: var(--color-card-bg);
+      border:1px solid var(--color-border);
+      border-radius:8px;
+      padding:16px;
+      max-width:600px;
+      margin:0 auto;
+      line-height:1.4;
+      text-align:left;
     }
 
     /* MODALS */
@@ -417,6 +522,14 @@
 </head>
 <body>
 
+<!-- OVERLAY SCELTA MODALITÀ (RAGAZZI/ADULTI) -->
+<div id="mode-selection-overlay">
+  <h2>Benvenuto a ULTRSKY!</h2>
+  <p>Scegli la versione che preferisci per esplorare la mostra:</p>
+  <button id="btn-mode-kid">Modalità Ragazzi</button>
+  <button id="btn-mode-adult">Modalità Adulti</button>
+</div>
+
 <header>
   <div id="header-left">
     <img 
@@ -434,15 +547,18 @@
   </div>
   <div class="menu-container" id="hamburger-menu">
     <ul class="menu-list">
-      <li>Alla scoperta del Blu Egizio</li>
-      <li>La Storia</li>
-      <li>La Scienza</li>
-      <li>Le Arti</li>
-      <li>Programma</li>
+      <li id="menu-blu-egizio">Alla scoperta del Blu Egizio</li>
+      <li id="menu-storia">La Storia</li>
+      <li id="menu-scienza">La Scienza</li>
+      <li id="menu-arti">Le Arti</li>
+      
+      <li id="menu-programma">Programma</li>
       <li id="btn-artisti">Artisti</li>
-      <li>Contatti</li>
-      <li>Catalogo Digitale</li>
-      <li>Crediti</li>
+      <li id="menu-contatti">Contatti</li>
+      <li id="menu-catalogo-digitale">Catalogo Digitale</li>
+      <li id="menu-crediti">Crediti</li>
+      
+      <li id="btn-change-mode">Cambia Modalità</li>
       <li id="btn-language">Lingua (IT/EN)</li>
     </ul>
   </div>
@@ -453,6 +569,16 @@
   <section class="intro" id="section-home">
     <h2 id="welcome-title">Benvenuti in Ultrasky</h2>
     <p id="welcome-desc">Scopri la mostra dedicata al Blu Egizio ...</p>
+
+    <button id="btn-back-selection">Torna alla Scelta</button>
+
+    <!-- Pulsante "Gioca con il Blu Egizio" visibile SOLO in kidMode -->
+    <button 
+      id="btn-play-blu"
+      style="display:none; margin-top:15px; background:var(--color-border); border:1px solid var(--color-border); border-radius:20px; padding:8px 16px; cursor:pointer;"
+    >
+      Gioca con il Blu Egizio
+    </button>
   </section>
 
   <!-- ULTRSKY 20 SCHEDE -->
@@ -462,8 +588,53 @@
 
   <!-- ARTISTI -->
   <section id="artists-section">
+    <h3 style="text-align:center; margin-bottom:10px;">Artisti</h3>
     <button class="back-btn" id="back-artists">Torna Indietro</button>
     <div class="artists-grid" id="artists-grid"></div>
+  </section>
+
+  <!-- GIOCHI RAGAZZI -->
+  <section id="kids-game-section">
+    <h2>Gioca con il Blu Egizio</h2>
+    <p>Scegli uno dei minigiochi per divertirti imparando!</p>
+
+    <button class="back-btn" id="btn-back-kids-home">Torna alla Home</button>
+
+    <div class="games-btns">
+      <button id="btn-labirinto">Labirinto</button>
+      <button id="btn-puzzle">Puzzle</button>
+      <button id="btn-chimico">Piccolo Chimico</button>
+    </div>
+
+    <!-- Labirinto -->
+    <div class="game-area" id="game-labirinto">
+      <h3>Labirinto degli Elementi</h3>
+      <p>
+        Sei in un labirinto misterioso! Trova gli elementi chimici necessari per creare il Blu Egizio.  
+        Gironzola fra i corridoi, raccogli i simboli (Si, Ca, Cu ...), e unisci i pezzi per uscire dal labirinto con la formula giusta!
+      </p>
+      <button class="btn-back" id="btn-back-labirinto">Torna ai Giochi</button>
+    </div>
+
+    <!-- Puzzle -->
+    <div class="game-area" id="game-puzzle">
+      <h3>Puzzle delle Opere</h3>
+      <p>
+        Ricomponi l’immagine di una delle opere in mostra! Trascina i pezzi al posto giusto per ricostruire il capolavoro.  
+        Osserva i dettagli e completa il puzzle nel minor tempo possibile.
+      </p>
+      <button class="btn-back" id="btn-back-puzzle">Torna ai Giochi</button>
+    </div>
+
+    <!-- Piccolo Chimico -->
+    <div class="game-area" id="game-chimico">
+      <h3>Il Piccolo Chimico</h3>
+      <p>
+        Hai a disposizione vari elementi chimici (Silicio, Calcio, Rame, …). Trascinali nella beuta e sperimenta la formula perfetta per ottenere il Blu Egizio!  
+        Ma attenzione: la quantità e l’ordine di reazione sono importanti.
+      </p>
+      <button class="btn-back" id="btn-back-chimico">Torna ai Giochi</button>
+    </div>
   </section>
 </main>
 
@@ -486,15 +657,12 @@
     <button class="modal-close" data-close="modal-ultrsky01-extended">X</button>
     <h2 id="ultrsky01-title">ULTRSKY 01 - Approfondimento</h2>
 
-    <!-- Testo corto -->
     <div id="ultrsky01-short"></div>
     <button class="read-more-btn" id="read-more-btn" style="margin-bottom:10px; display:none;">Continua a leggere</button>
 
-    <!-- Testo completo -->
     <div id="ultrsky01-full"></div>
     <button class="read-more-btn" id="reduce-btn" style="display:none; margin-top:10px;">Riduci testo</button>
 
-    <!-- IMMAGINE cliccabile -->
     <img 
       id="ultrsky01-img"
       src="https://64.media.tumblr.com/1c6a8f123b3ecfe43ea74cbe4fe0b8aa/tumblr_o3me1uDL8i1qdh7ndo1_540.jpg"
@@ -502,7 +670,6 @@
       style="cursor:pointer; margin-top:10px;"
     >
 
-    <!-- LIKE & SHARE -->
     <div class="like-share-container">
       <button class="like-btn" id="like-btn">Like</button>
       <span id="like-count">0</span>
@@ -510,14 +677,28 @@
       <div style="position:relative;">
         <button class="share-btn" id="share-btn">Condividi</button>
         <div class="share-popup" id="share-popup">
-          <div class="share-icon" style="background:#4267B2;" data-social="facebook" title="Facebook"></div>
-          <div class="share-icon" style="background:#1DA1F2;" data-social="x" title="X"></div>
-          <div class="share-icon" style="background:#E1306C;" data-social="instagram" title="Instagram"></div>
+          <div 
+            class="share-icon" 
+            style="background:#4267B2;" 
+            data-social="facebook" 
+            title="Facebook"
+          ></div>
+          <div 
+            class="share-icon" 
+            style="background:#1DA1F2;" 
+            data-social="x" 
+            title="X"
+          ></div>
+          <div 
+            class="share-icon" 
+            style="background:#E1306C;" 
+            data-social="instagram" 
+            title="Instagram"
+          ></div>
         </div>
       </div>
     </div>
 
-    <!-- Video -->
     <div style="position:relative; padding-top:56.25%; margin-top:10px;">
       <iframe 
         src="https://www.youtube.com/embed/vJsiPNdQCzk"
@@ -534,7 +715,58 @@
   <img id="img-modal-img" src="" alt="fullscreen">
 </div>
 
+<!-- MODAL MENU INFO -->
+<div class="modal-overlay" id="menu-info-modal">
+  <div class="modal-content" style="max-width:600px; position:relative;">
+    <button class="modal-close" data-close="menu-info-modal">X</button>
+    <h2 id="menu-info-title"></h2>
+    <div id="menu-info-body" style="white-space:pre-wrap; line-height:1.4;"></div>
+  </div>
+</div>
+
 <script>
+/***********************
+ * SCELTA MODALITÀ
+ ***********************/
+let isKidMode = false;
+const modeSelectionOverlay = document.getElementById('mode-selection-overlay');
+const btnModeKid   = document.getElementById('btn-mode-kid');
+const btnModeAdult = document.getElementById('btn-mode-adult');
+
+/***********************
+ * AREE GIOCHI
+ ***********************/
+const kidsGameSection = document.getElementById('kids-game-section');
+const gameLabirinto   = document.getElementById('game-labirinto');
+const gamePuzzle      = document.getElementById('game-puzzle');
+const gameChimico     = document.getElementById('game-chimico');
+
+/******** PULSANTE “TORNA ALLA SCELTA” *********/
+const btnBackSelection = document.getElementById('btn-back-selection');
+btnBackSelection.addEventListener('click', ()=>{
+  // Nascondiamo la webapp e torniamo all’overlay di scelta
+  document.body.classList.remove('menu-open');
+  homeSection.style.display='none';
+  exhibitionListEl.style.display='none';
+  kidsGameSection.style.display='none';
+  artistsSection.style.display='none';
+
+  modeSelectionOverlay.style.display='flex';
+});
+
+btnModeKid.addEventListener('click', () => {
+  isKidMode = true;
+  modeSelectionOverlay.style.display = 'none';
+  updateLanguage("kid");  
+  startApp();
+});
+btnModeAdult.addEventListener('click', () => {
+  isKidMode = false;
+  modeSelectionOverlay.style.display = 'none';
+  updateLanguage("it");  // default
+  startApp();
+});
+
 /***********************
  * MENU HAMBURGER
  ***********************/
@@ -542,6 +774,15 @@ const hamburgerBtn=document.getElementById('hamburger-btn');
 const hamburgerMenu=document.getElementById('hamburger-menu');
 hamburgerBtn.addEventListener('click',()=>{
   document.body.classList.toggle('menu-open');
+});
+
+/***********************
+ * CAMBIO MODALITÀ
+ ***********************/
+document.getElementById('btn-change-mode').addEventListener('click',()=>{
+  document.body.classList.remove('menu-open');
+  hideAllSections();
+  modeSelectionOverlay.style.display='flex';
 });
 
 /***********************
@@ -582,18 +823,20 @@ if(imgModal){
 /***********************
  * SEZIONI
  ***********************/
-const homeSection=document.getElementById('section-home');
-const ultrskyList=document.getElementById('exhibition-list');
-const artistsSection=document.getElementById('artists-section');
+const homeSection       = document.getElementById('section-home');
+const exhibitionListEl  = document.getElementById('exhibition-list');
+const artistsSection    = document.getElementById('artists-section');
 
 function hideAllSections(){
   homeSection.style.display='none';
-  ultrskyList.style.display='none';
+  exhibitionListEl.style.display='none';
   artistsSection.style.display='none';
+  kidsGameSection.style.display='none';
 }
 
 // ARTISTI
-document.getElementById('btn-artisti').addEventListener('click',()=>{
+const btnArtisti=document.getElementById('btn-artisti');
+btnArtisti.addEventListener('click',()=>{
   hideAllSections();
   artistsSection.style.display='block';
   document.body.classList.remove('menu-open');
@@ -601,46 +844,105 @@ document.getElementById('btn-artisti').addEventListener('click',()=>{
 document.getElementById('back-artists').addEventListener('click',()=>{
   artistsSection.style.display='none';
   homeSection.style.display='block';
-  ultrskyList.style.display='flex';
+  exhibitionListEl.style.display='flex'; 
 });
 
 /***********************
- * LINGUA
+ * TRADUZIONI
  ***********************/
 let currentLang="it";
+const translations={
+  it:{
+    welcomeTitle:"Benvenuti in Ultrasky",
+    welcomeDesc:"Scopri la mostra dedicata al Blu Egizio ...",
+    ultrsky01Title:"ULTRSKY 01 - Approfondimento",
+    likeBtn:"Like",
+    shareBtn:"Condividi",
+    readMore:"Continua a leggere",
+    reduceText:"Riduci testo",
+    speakBtn:"Ascolta",
+    playBtn:"Gioca con il Blu Egizio"
+  },
+  en:{
+    welcomeTitle:"Welcome to Ultrasky",
+    welcomeDesc:"Discover the exhibition dedicated to Egyptian Blue ...",
+    ultrsky01Title:"ULTRSKY 01 - Insights",
+    likeBtn:"Like",
+    shareBtn:"Share",
+    readMore:"Read more",
+    reduceText:"Reduce text",
+    speakBtn:"Listen",
+    playBtn:"Play with Egyptian Blue"
+  },
+  kid:{
+    welcomeTitle:"Ciao Ragazzi, benvenuti a Ultrasky!",
+    welcomeDesc:"Scopri il Blu Egizio con giochi e curiosità!",
+    ultrsky01Title:"ULTRSKY 01 - Racconto",
+    likeBtn:"Mi piace!",
+    shareBtn:"Condividi",
+    readMore:"Leggi di più",
+    reduceText:"Riduci",
+    speakBtn:"Ascolta",
+    playBtn:"Gioca con il Blu Egizio"
+  }
+};
+
+/* Mappatura voci di menù */
+const menuLabels = [
+  { id: "menu-blu-egizio",        it: "Alla scoperta del Blu Egizio", en: "Discovering Egyptian Blue" },
+  { id: "menu-storia",            it: "La Storia",                    en: "History" },
+  { id: "menu-scienza",           it: "La Scienza",                   en: "Science" },
+  { id: "menu-arti",              it: "Le Arti",                      en: "Arts" },
+  { id: "menu-programma",         it: "Programma",                    en: "Program" },
+  { id: "btn-artisti",            it: "Artisti",                      en: "Artists" },
+  { id: "menu-contatti",          it: "Contatti",                     en: "Contacts" },
+  { id: "menu-catalogo-digitale", it: "Catalogo Digitale",            en: "Digital Catalog" },
+  { id: "menu-crediti",           it: "Crediti",                      en: "Credits" },
+  { id: "btn-change-mode",        it: "Cambia Modalità",              en: "Change Mode" },
+  { id: "btn-language",           it: "Lingua (IT/EN)",               en: "Language (IT/EN)" }
+];
+
 function updateLanguage(lang){
   currentLang=lang;
+  const t=translations[lang];
 
-  if(lang==="it"){
-    document.getElementById('welcome-title').textContent="Benvenuti in Ultrasky";
-    document.getElementById('welcome-desc').textContent="Scopri la mostra dedicata al Blu Egizio ...";
-    document.getElementById('ultrsky01-title').textContent="ULTRSKY 01 - Approfondimento";
-    document.getElementById('like-btn').textContent="Like";
-    document.getElementById('share-btn').textContent="Condividi";
-    document.getElementById('read-more-btn').textContent="Continua a leggere";
-    document.getElementById('reduce-btn').textContent="Riduci testo";
-  } else {
-    document.getElementById('welcome-title').textContent="Welcome to Ultrasky";
-    document.getElementById('welcome-desc').textContent="Discover the exhibition dedicated to Egyptian Blue ...";
-    document.getElementById('ultrsky01-title').textContent="ULTRSKY 01 - Insights";
-    document.getElementById('like-btn').textContent="Like";
-    document.getElementById('share-btn').textContent="Share";
-    document.getElementById('read-more-btn').textContent="Read more";
-    document.getElementById('reduce-btn').textContent="Reduce text";
-  }
+  // Aggiorno i testi home
+  document.getElementById('welcome-title').textContent    = t.welcomeTitle;
+  document.getElementById('welcome-desc').textContent     = t.welcomeDesc;
+  document.getElementById('ultrsky01-title').textContent  = t.ultrsky01Title;
 
-  // Aggiorna artisti
-  const nameEls=document.querySelectorAll('.artist-name');
-  artistsData.forEach((artist,idx)=>{
-    nameEls[idx].textContent=(lang==="it")? artist.nameIT : artist.nameEN;
+  // Bottoni vari
+  const likeB  = document.getElementById('like-btn');
+  if(likeB)  likeB.textContent  = t.likeBtn;
+  const shareB = document.getElementById('share-btn');
+  if(shareB) shareB.textContent = t.shareBtn;
+  const readMB= document.getElementById('read-more-btn');
+  if(readMB) readMB.textContent = t.readMore;
+  const reduceB= document.getElementById('reduce-btn');
+  if(reduceB) reduceB.textContent = t.reduceText;
+  const playB = document.getElementById('btn-play-blu');
+  if(playB) playB.textContent    = t.playBtn;
+
+  // Aggiorno le voci di menù
+  menuLabels.forEach(item => {
+    const el = document.getElementById(item.id);
+    if (el) {
+      el.textContent = (lang === "en") ? item.en : item.it;
+    }
   });
 
-  // Ricarica ULTRSKY
+  // Ricarico le card ULTRSKY
   refreshUltrskyCards();
 }
+
+/***********************
+ * LINGUA (IT/EN)
+ ***********************/
 document.getElementById('btn-language').addEventListener('click',()=>{
   if(currentLang==="it"){
     updateLanguage("en");
+  } else if(currentLang==="en"){
+    updateLanguage("it");
   } else {
     updateLanguage("it");
   }
@@ -654,65 +956,16 @@ const artistsData=[
   {
     nameIT:"Viola Alpi",
     nameEN:"Viola Alpi",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/alpi_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/violaalpi.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Viola%20Alpi_en.txt"
+    photo:"https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/alpi_image.jpg",
+    textIT:"https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/viola%20alpi.txt",
+    textEN:"https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/Viola%20Alpi_en.txt"
   },
   {
     nameIT:"CaCO3",
     nameEN:"CaCO3",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/caco3_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/caco3_it.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/CaCO3_en.txt"
-  },
-  {
-    nameIT:"Andrea Chidichimo",
-    nameEN:"Andrea Chidichimo",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/chidichimo_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Andrea%20Chidichimo.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Andrea%20Chidichimo_en.txt"
-  },
-  {
-    nameIT:"Stefano Conticelli",
-    nameEN:"Stefano Conticelli",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/conticelli_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Stefano%20Conticelli.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Stefano%20Conticelli_en.txt"
-  },
-  {
-    nameIT:"Giuliano Giuman",
-    nameEN:"Giuliano Giuman",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/giuman_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Giuliano%20Giuman.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Giuliano%20Giuman_en.txt"
-  },
-  {
-    nameIT:"Kamilia Kard",
-    nameEN:"Kamilia Kard",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/kard_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Kamilia%20Kard.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Kamilia%20Kard_en.txt"
-  },
-  {
-    nameIT:"Matteo Peducci",
-    nameEN:"Matteo Peducci",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/peducci_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Matteo%20Peducci.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Matteo%20Peducci_en.txt"
-  },
-  {
-    nameIT:"Erica Tamborini",
-    nameEN:"Erica Tamborini",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/tamborini_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Erica%20Tamborini.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Erica%20Tamborini_en.txt"
-  },
-  {
-    nameIT:"Franco Vitelli",
-    nameEN:"Franco Vitelli",
-    photo:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/vitelli_image.jpg",
-    textIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Franco%20Vitelli.txt",
-    textEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Franco%20Vitelli_en.txt"
+    photo:"https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/caco3_image.jpg",
+    textIT:"https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/caco3_it.txt",
+    textEN:"https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/CaCO3_en.txt"
   }
 ];
 artistsData.forEach(artist=>{
@@ -729,11 +982,11 @@ artistsData.forEach(artist=>{
   card.appendChild(img);
   card.appendChild(nm);
   card.addEventListener('click',()=>{
-    const url=(currentLang==="it")? artist.textIT : artist.textEN;
+    const url=(currentLang==="it" || currentLang==="kid")? artist.textIT : artist.textEN;
     fetch(url)
       .then(res=>res.text())
       .then(txt=>{
-        document.getElementById('artist-modal-name').textContent=(currentLang==="it")? artist.nameIT : artist.nameEN;
+        document.getElementById('artist-modal-name').textContent=(currentLang==="it" || currentLang==="kid")? artist.nameIT : artist.nameEN;
         document.getElementById('artist-modal-body').textContent=txt;
         document.getElementById('artist-modal').classList.add('active');
       })
@@ -744,15 +997,31 @@ artistsData.forEach(artist=>{
 });
 
 /***********************
+ * ULTRSKY 01:
+ * Testi adulti vs testi kids
+ * Audio adulti vs audio kids
+ ***********************/
+/* Testo Adulti */
+const caco3TextIT     = "https://raw.githubusercontent.com/gfq40/ultrasky/main/text/caco3_it.txt";
+const caco3TextEN     = "https://raw.githubusercontent.com/gfq40/ultrasky/main/text/caco3_en.txt";
+
+/* Testo Kids */
+const caco3TextKidIT  = "https://raw.githubusercontent.com/gfq40/ultrasky/main/kids/caco3.txt"; 
+const caco3TextKidEN  = "https://raw.githubusercontent.com/gfq40/ultrasky/main/kids/caco3_en.txt"; 
+
+/* Audio Adulti */
+const caco3AudioIT    = "https://raw.githubusercontent.com/gfq40/ultrasky/main/audio/caco3_it.mp3";
+const caco3AudioEN    = "https://raw.githubusercontent.com/gfq40/ultrasky/main/audio/caco3_en.mp3";
+
+/* Audio Kids (locale) */
+const caco3AudioKidIT = "https://raw.githubusercontent.com/gfq40/ultrasky/main/kids/caco03_kids.mp3";       // <-- percorso relativo
+const caco3AudioKidEN = "https://raw.githubusercontent.com/gfq40/ultrasky/main/kids/caco3_kids_en.mp3";     // <-- percorso relativo
+
+/***********************
  * ULTRSKY
  ***********************/
 const ultrskyListEl=document.getElementById('exhibition-list');
 
-// Link caco3 text
-const caco3TextIT="https://raw.githubusercontent.com/gfq40/grandtour/main/text/caco3_it.txt";
-const caco3TextEN="https://raw.githubusercontent.com/gfq40/grandtour/main/text/caco3_en.txt";
-
-// 20 schede
 const ultrskyPieces=[
   {
     id:1,
@@ -760,8 +1029,9 @@ const ultrskyPieces=[
     descIT:"Approfondimento su micromosaico e CACO3.",
     titleEN:"ULTRSKY 01",
     descEN:"Insights on micro-mosaic and CACO3.",
-    audioIT:"https://raw.githubusercontent.com/gfq40/grandtour/main/audio/caco3_it.mp3",
-    audioEN:"https://raw.githubusercontent.com/gfq40/grandtour/main/audio/caco3_en.mp3",
+    // Audio di default (versione adulti)
+    audioIT:caco3AudioIT,
+    audioEN:caco3AudioEN,
     hasExtended:true
   },
   {
@@ -773,7 +1043,6 @@ const ultrskyPieces=[
     audioIT:"",
     audioEN:""
   },
-  // ... puoi completare fino a 20 ...
   {
     id:20,
     titleIT:"ULTRSKY 20",
@@ -785,54 +1054,75 @@ const ultrskyPieces=[
   }
 ];
 
-// Creazione schede
+/***********************
+ * refreshUltrskyCards()
+ * Renderizza le card della mostra
+ ***********************/
 function refreshUltrskyCards(){
   ultrskyListEl.innerHTML="";
   ultrskyPieces.forEach(piece=>{
     const card=document.createElement('div');
     card.className='piece-card';
 
+    // Titolo
     const h3=document.createElement('h3');
     h3.className='piece-title';
-    h3.textContent=(currentLang==="it")? piece.titleIT : piece.titleEN;
+    h3.textContent=(currentLang==="it" || currentLang==="kid")? piece.titleIT : piece.titleEN;
 
+    // Descrizione
     const dsc=document.createElement('div');
     dsc.className='piece-desc';
-    dsc.textContent=(currentLang==="it")? piece.descIT : piece.descEN;
+    dsc.textContent=(currentLang==="it" || currentLang==="kid")? piece.descIT : piece.descEN;
 
+    // Elemento audio hidden
     const audioEl=document.createElement('audio');
     audioEl.style.display='none';
     audioEl.controls=true;
 
+    // Pulsante "Ascolta"
     const speakBtn=document.createElement('button');
     speakBtn.className='speak-btn';
     speakBtn.dataset.playing="false";
-    speakBtn.textContent=(currentLang==="it")? "Ascolta" : "Listen";
+    speakBtn.textContent=(currentLang==="it" || currentLang==="kid")
+      ? translations[currentLang].speakBtn
+      : translations.en.speakBtn;
 
+    // Gestione Click su "Ascolta"
     speakBtn.addEventListener('click',(e)=>{
-      e.stopPropagation();
+      e.stopPropagation(); 
       toggleAudio(speakBtn,audioEl,piece);
     });
 
+    // Inserisco gli elementi nella card
     card.appendChild(h3);
     card.appendChild(dsc);
     card.appendChild(speakBtn);
     card.appendChild(audioEl);
 
+    // Click card -> se è ULTRSKY 01 e hasExtended, apri modal di approfondimento
     card.addEventListener('click',()=>{
       if(piece.id===1 && piece.hasExtended){
-        fetch((currentLang==="it")? caco3TextIT : caco3TextEN)
+        // Scegli testo a seconda di kidMode o meno
+        let textURL="";
+        if(isKidMode){
+          textURL = (currentLang==="it" || currentLang==="kid")
+            ? caco3TextKidIT
+            : caco3TextKidEN;
+        } else {
+          textURL = (currentLang==="it")
+            ? caco3TextIT
+            : caco3TextEN;
+        }
+        fetch(textURL)
           .then(res=>res.text())
           .then(txt=>{
-            // Dividiamo testo in due parti (breve e resto)
             let shortLen=200;
-            let shortText = txt.substring(0, shortLen);
-            let fullText  = txt.substring(shortLen);
+            let shortText=txt.substring(0, shortLen);
+            let fullText =txt.substring(shortLen);
 
-            document.getElementById('ultrsky01-short').textContent= shortText.trim()+"...";
-            document.getElementById('ultrsky01-full').textContent = fullText.trim();
+            document.getElementById('ultrsky01-short').textContent = shortText.trim()+"...";
+            document.getElementById('ultrsky01-full').textContent  = fullText.trim();
 
-            // Se il fullText è molto breve, nascondi readMore
             if(fullText.trim().length<10){
               document.getElementById('read-more-btn').style.display='none';
               document.getElementById('reduce-btn').style.display='none';
@@ -845,32 +1135,53 @@ function refreshUltrskyCards(){
             closeAllModals();
             document.getElementById('modal-ultrsky01-extended').classList.add('active');
           })
-          .catch(err=>console.error("fetch caco3 text error:",err));
+          .catch(err=>console.error("fetch caco3 text error:", err));
       }
     });
 
+    // Appendo la card al container
     ultrskyListEl.appendChild(card);
   });
 }
 
-// Audio toggle
+/***********************
+ * toggleAudio
+ * Se la card è ULTRSKY 01 in modalità ragazzi,
+ * usa l'audio kids (locale), altrimenti adulti
+ ***********************/
 function toggleAudio(btn,audioEl,piece){
   if(btn.dataset.playing==="false"){
     audioEl.currentTime=0;
-    audioEl.src=(currentLang==="it")? piece.audioIT : piece.audioEN;
+    let audioSrc="";
+    // ULTRSKY 01 + kidMode -> audio kids
+    if(piece.id===1 && isKidMode){
+      audioSrc = (currentLang==="it" || currentLang==="kid")
+        ? caco3AudioKidIT
+        : caco3AudioKidEN;
+    }
+    else {
+      // default (adulti)
+      audioSrc = ((currentLang==="it" || currentLang==="kid")
+                 ? piece.audioIT
+                 : piece.audioEN)
+                 || "";
+    }
+    audioEl.src=audioSrc;
     audioEl.play();
     btn.dataset.playing="true";
-    btn.textContent=(currentLang==="it")?"Interrompi":"Stop";
+    btn.textContent=(currentLang==="it" || currentLang==="kid") ? "Interrompi" : "Stop";
   } else {
     audioEl.pause();
     audioEl.currentTime=0;
     btn.dataset.playing="false";
-    btn.textContent=(currentLang==="it")?"Ascolta":"Listen";
+    btn.textContent=(currentLang==="it" || currentLang==="kid")
+      ? translations[currentLang].speakBtn
+      : translations.en.speakBtn;
   }
 }
 
 /***********************
- * LIKE su ULTRSKY 01
+ * LIKE & SHARE
  ***********************/
 let likeCount=0;
 const likeBtn=document.getElementById('like-btn');
@@ -878,15 +1189,17 @@ const likeCountSpan=document.getElementById('like-count');
 const liked=localStorage.getItem('ultrsky01_liked'); 
 if(liked==='true'){
   likeCount=1;
-  likeCountSpan.textContent=likeCount;
-  likeBtn.disabled=true;
-  likeBtn.textContent="Liked!";
+  if(likeCountSpan) likeCountSpan.textContent=likeCount;
+  if(likeBtn){
+    likeBtn.disabled=true;
+    likeBtn.textContent="Liked!";
+  }
 }
 if(likeBtn){
   likeBtn.addEventListener('click',()=>{
     if(!localStorage.getItem('ultrsky01_liked')){
       likeCount++;
-      likeCountSpan.textContent=likeCount;
+      if(likeCountSpan) likeCountSpan.textContent=likeCount;
       likeBtn.disabled=true;
       likeBtn.textContent="Liked!";
       localStorage.setItem('ultrsky01_liked','true');
@@ -894,9 +1207,6 @@ if(likeBtn){
   });
 }
 
-/***********************
- * SHARE su ULTRSKY 01
- ***********************/
 const shareBtn=document.getElementById('share-btn');
 const sharePopup=document.getElementById('share-popup');
 const photoURL="https://mywebsite.com/foto-ultrsky01.jpg";
@@ -904,16 +1214,15 @@ const photoURL="https://mywebsite.com/foto-ultrsky01.jpg";
 if(shareBtn){
   shareBtn.addEventListener('click',(e)=>{
     e.stopPropagation();
-    sharePopup.classList.toggle('active');
+    if(sharePopup) sharePopup.classList.toggle('active');
   });
 }
 document.addEventListener('click',(e)=>{
-  if(sharePopup.classList.contains('active') && e.target!==shareBtn && !sharePopup.contains(e.target)){
+  if(sharePopup && sharePopup.classList.contains('active') && e.target!==shareBtn && !sharePopup.contains(e.target)){
     sharePopup.classList.remove('active');
   }
 });
-const shareIcons=document.querySelectorAll('.share-icon');
-shareIcons.forEach(icon=>{
+document.querySelectorAll('.share-icon').forEach(icon=>{
   icon.addEventListener('click',(e)=>{
     e.stopPropagation();
     const social=icon.dataset.social;
@@ -926,42 +1235,192 @@ shareIcons.forEach(icon=>{
       url=`https://www.instagram.com/`;
     }
     window.open(url,"_blank");
-    sharePopup.classList.remove('active');
+    if(sharePopup) sharePopup.classList.remove('active');
   });
 });
 
 /***********************
- * Leggi di più / Riduci
+ * LEGGI DI PIÙ / RIDUCI
  ***********************/
 const readMoreBtn = document.getElementById('read-more-btn');
 const reduceBtn   = document.getElementById('reduce-btn');
 const shortDiv    = document.getElementById('ultrsky01-short');
 const fullDiv     = document.getElementById('ultrsky01-full');
+
 if(readMoreBtn){
   readMoreBtn.addEventListener('click',()=>{
-    fullDiv.style.display='block';
-    readMoreBtn.style.display='none';
-    reduceBtn.style.display='inline';
+    if(fullDiv){
+      fullDiv.style.display='block';
+      readMoreBtn.style.display='none';
+      reduceBtn.style.display='inline';
+    }
   });
 }
 if(reduceBtn){
   reduceBtn.addEventListener('click',()=>{
-    fullDiv.style.display='none';
-    readMoreBtn.style.display='inline';
-    reduceBtn.style.display='none';
+    if(fullDiv){
+      fullDiv.style.display='none';
+      readMoreBtn.style.display='inline';
+      reduceBtn.style.display='none';
+    }
   });
 }
 
 /***********************
- * INIT
+ * BTN "GIOCA CON IL BLU EGIZIO"
  ***********************/
-function init(){
+const btnPlayBlu = document.getElementById('btn-play-blu');
+btnPlayBlu.addEventListener('click',()=>{
+  hideAllSections();
+  kidsGameSection.style.display='block';
+});
+
+/***********************
+ * TORNARE ALLA HOME DALLA SEZIONE GIOCHI
+ ***********************/
+const btnBackKidsHome = document.getElementById('btn-back-kids-home');
+btnBackKidsHome.addEventListener('click',()=>{
+  kidsGameSection.style.display='none';
   homeSection.style.display='block';
-  ultrskyList.style.display='flex';
+  if(isKidMode) exhibitionListEl.style.display='flex'; 
+});
+
+/***********************
+ * MENU GIOCHI
+ ***********************/
+document.getElementById('btn-labirinto').addEventListener('click',()=>{
+  hideGames();
+  gameLabirinto.style.display='block';
+});
+document.getElementById('btn-puzzle').addEventListener('click',()=>{
+  hideGames();
+  gamePuzzle.style.display='block';
+});
+document.getElementById('btn-chimico').addEventListener('click',()=>{
+  hideGames();
+  gameChimico.style.display='block';
+});
+function hideGames(){
+  gameLabirinto.style.display='none';
+  gamePuzzle.style.display='none';
+  gameChimico.style.display='none';
+}
+
+/***********************
+ * TORNARE DALL’INTERNO DI OGNI GIOCO
+ ***********************/
+document.getElementById('btn-back-labirinto').addEventListener('click',()=>{
+  gameLabirinto.style.display='none';
+  kidsGameSection.style.display='block';
+});
+document.getElementById('btn-back-puzzle').addEventListener('click',()=>{
+  gamePuzzle.style.display='none';
+  kidsGameSection.style.display='block';
+});
+document.getElementById('btn-back-chimico').addEventListener('click',()=>{
+  gameChimico.style.display='none';
+  kidsGameSection.style.display='block';
+});
+
+/***********************
+ * LINK TESTO MENU 
+ ***********************/
+const menuItems = [
+  {
+    id: "menu-blu-egizio",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/alla_scoperta_del_blu_egizio.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/alla_scoperta_del_blu_egizio_en.txt",
+    titleIT: "Alla scoperta del Blu Egizio",
+    titleEN: "Discovering Egyptian Blue"
+  },
+  {
+    id: "menu-storia",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_storia.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_storia_en.txt",
+    titleIT: "La Storia",
+    titleEN: "History"
+  },
+  {
+    id: "menu-scienza",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_scienza.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_scienza_en.txt",
+    titleIT: "La Scienza",
+    titleEN: "Science"
+  },
+  {
+    id: "menu-arti",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/le_arti.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/le_arti_en.txt",
+    titleIT: "Le Arti",
+    titleEN: "Arts"
+  },
+  {
+    id: "menu-programma",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/programma.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/programma_en.txt",
+    titleIT: "Programma",
+    titleEN: "Program"
+  },
+  {
+    id: "menu-contatti",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/contatti.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/contatti_en.txt",
+    titleIT: "Contatti",
+    titleEN: "Contacts"
+  }
+];
+
+menuItems.forEach(item => {
+  const el = document.getElementById(item.id);
+  if(!el) return;
+  el.addEventListener('click', ()=>{
+    closeAllModals();
+    document.body.classList.remove('menu-open');
+    
+    const url = (currentLang==="it" || currentLang==="kid") ? item.textIT : item.textEN;
+
+    fetch(url)
+      .then(res=>res.text())
+      .then(txt=>{
+        const title = (currentLang==="it" || currentLang==="kid")? item.titleIT : item.titleEN;
+        document.getElementById('menu-info-title').textContent = title;
+        document.getElementById('menu-info-body').textContent = txt;
+        document.getElementById('menu-info-modal').classList.add('active');
+      })
+      .catch(err=>{
+        console.error("Errore caricamento testo menu:", err);
+      });
+  });
+});
+
+/***********************
+ * AVVIO DELL’APP
+ ***********************/
+function startApp(){
+  // Mostriamo la home
+  homeSection.style.display='block';
+
+  // Se non è kid mode, mostriamo anche le card ULTRSKY
+  if(!isKidMode){
+    exhibitionListEl.style.display='flex';
+    btnPlayBlu.style.display='none';
+  } else {
+    // In kidMode, rendiamo visibile il bottone "Gioca con il Blu Egizio"
+    exhibitionListEl.style.display='flex';
+    btnPlayBlu.style.display='inline-block';
+  }
   artistsSection.style.display='none';
+  kidsGameSection.style.display='none';
+
+  // Mostriamo il pulsante "Torna alla Scelta"
+  btnBackSelection.style.display='inline-block';
 
   refreshUltrskyCards();
-  updateLanguage("it");
+}
+
+function init(){
+  hideAllSections();
+  // Overlay visibile all'avvio
 }
 init();
 </script>
@@ -977,4 +1436,3 @@ init();
 </script>
 </body>
 </html>
-
