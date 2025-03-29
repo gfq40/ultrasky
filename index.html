@@ -83,7 +83,7 @@
       animation: rainbowFlow 16s ease infinite;
 
       /* Cursor personalizzato */
-      cursor: url('https://raw.githubusercontent.com/gfq40/ultrasky/main/icons/star-cursor.png'), auto;
+      cursor: url('https://raw.githubusercontent.com/gfq40/ULTRASKY/main/icons/star-cursor.png'), auto;
       transition: background var(--transition-speed), color var(--transition-speed);
     }
     @keyframes rainbowFlow {
@@ -199,7 +199,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: url('https://raw.githubusercontent.com/gfq40/ultrasky/main/img/stars-bg.jpg') repeat center center;
+      background: url('https://raw.githubusercontent.com/gfq40/ULTRASKY/main/img/stars-bg.jpg') repeat center center;
       background-size: cover;
       z-index: -2;
       animation: moveStars 50s linear infinite;
@@ -396,7 +396,7 @@
       box-shadow:0 4px 10px rgba(0,0,0,0.3);
     }
 
-    /* ULTRSKY 20 SCHEDE */
+    /* ULTRASKY 20 SCHEDE */
     .exhibition-intro {
       text-align: center;
       margin-top: 40px; 
@@ -588,6 +588,14 @@
     .modal-overlay.active {
       display:flex;
     }
+	.modal-content {
+	  width: calc(100vw - 40px);  /* 20px di bordo a sinistra e a destra */
+	  height: calc(100vh - 40px); /* 20px di bordo in alto e in basso */
+	  margin: 20px;
+	  padding: 20px; /* Se vuoi un po' di spazio interno */
+	  box-sizing: border-box;
+	  overflow-y: auto; /* Per gestire eventuali contenuti troppo lunghi */
+	}
     .modal-content {
       background: var(--color-bg-start);
       border:1px solid var(--color-border);
@@ -666,8 +674,8 @@
       position:relative;
     }
 
-    /* ULTRSKY 01 EXTENDED */
-    #modal-ultrsky01-extended .like-share-container {
+    /* ULTRASKY 01 EXTENDED */
+    #modal-ultrasky01-extended .like-share-container {
       margin-top:10px;
       display:flex;
       align-items:center;
@@ -718,8 +726,8 @@
     }
 
     /* Testo corto + lungo */
-    #ultrsky01-short { margin-bottom:10px; white-space:pre-wrap; }
-    #ultrsky01-full  { display:none; margin-top:10px; white-space:pre-wrap; }
+    #ultrasky01-short { margin-bottom:10px; white-space:pre-wrap; }
+    #ultrasky01-full  { display:none; margin-top:10px; white-space:pre-wrap; }
 
     /* Animazione “bump” su lettura audio */
     .speak-btn[data-playing="true"] {
@@ -847,7 +855,7 @@
 
 <!-- OVERLAY SCELTA MODALITÀ -->
 <div id="mode-selection-overlay">
-  <h2>Benvenuto a ULTRSKY!</h2>
+  <h2>Benvenuto a ULTRASKY!</h2>
   <p>Scegli la versione che preferisci per esplorare la mostra:</p>
   <button id="btn-mode-kid">Modalità Ragazzi</button>
   <button id="btn-mode-adult">Modalità Adulti</button>
@@ -856,11 +864,11 @@
 <header>
   <div id="header-left">
     <img 
-      src="https://www.ultrasky.it/news/wp-content/uploads/2024/11/loghino-scarabeo-80.png"
-      alt="Logo Ultrasky"
+      src="https://www.ULTRASKY.it/news/wp-content/uploads/2024/11/loghino-scarabeo-80.png"
+      alt="Logo ULTRASKY"
       class="logo"
     >
-    <div id="header-title">ULTRSKY - PRIVERNO</div>
+    <div id="header-title">ULTRASKY - PRIVERNO</div>
   </div>
 
   <!-- HAMBURGER -->
@@ -905,14 +913,14 @@
 <main>
   <!-- HOME -->
   <section class="intro" id="section-home">
-    <h2 id="welcome-title">Benvenuti in Ultrasky</h2>
+    <h2 id="welcome-title">Benvenuti in ULTRASKY</h2>
     <p id="welcome-desc">Scopri la mostra dedicata al Blu Egizio ...</p>
 
     <button id="btn-back-selection">Torna alla Scelta</button>
     <!-- Il pulsante "Gioca con il Blu Egizio" è stato rimosso -->
   </section>
 
-  <!-- ULTRSKY 20 SCHEDE -->
+  <!-- ULTRASKY 20 SCHEDE -->
   <h2 class="exhibition-intro neon-title">Segui il percorso museale</h2>
   <section>
     <div class="exhibition-list" id="exhibition-list"></div>
@@ -1129,7 +1137,7 @@
 </main>
 
 <div class="bottom-bar">
-  <p style="margin:0;">© 2024 UltraSky - All Rights Reserved</p>
+  <p style="margin:0;">© 2024 ULTRASKY - All Rights Reserved</p>
 </div>
 
 <!-- MODAL ARTISTA -->
@@ -1141,29 +1149,28 @@
   </div>
 </div>
 
-<!-- MODAL ULTRSKY 01 -->
-<div class="modal-overlay" id="modal-ultrsky01-extended">
+<!--bisogna modificare questa funzione in modo che vada a prendersi immagini, testo e video nella cartella giusta in base 
+ad una variabile che va da 0 a 8-->
+<!-- MODAL ULTRASKY 01 -->
+<div class="modal-overlay video-modal" id="modal-ultrasky01-extended">
   <div class="modal-content" style="max-width:600px; position:relative;">
-    <button class="modal-close" data-close="modal-ultrsky01-extended">X</button>
-    <h2 id="ultrsky01-title">ULTRSKY 01 - Approfondimento</h2>
+    <button class="modal-close" data-close="modal-ultrasky01-extended">X</button>
+    <h2 id="ultrasky01-title">ULTRASKY 01 - Approfondimento</h2>
 
-    <div id="ultrsky01-short"></div>
+    <div id="ultrasky01-short"></div>
     <button class="read-more-btn" id="read-more-btn" style="margin-bottom:10px; display:none;">Continua a leggere</button>
 
-    <div id="ultrsky01-full"></div>
+    <div id="ultrasky01-full"></div>
     <button class="read-more-btn" id="reduce-btn" style="display:none; margin-top:10px;">Riduci testo</button>
-
-    <img 
-      id="ultrsky01-img"
-      src="https://64.media.tumblr.com/1c6a8f123b3ecfe43ea74cbe4fe0b8aa/tumblr_o3me1uDL8i1qdh7ndo1_540.jpg"
-      alt="Micromosaico CACO3"
-      style="cursor:pointer; margin-top:10px;"
-    >
-
-    <div class="like-share-container">
+<!-- Inserisci qui il blocco per il video dinamico -->
+<div id="video-container" style="position:relative; padding-top:56.25%; margin-top:10px; display:none;">
+      <iframe id="video-iframe" src="" title="Video" allowfullscreen
+              style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"></iframe>
+    </div>
+    
+     <div class="like-share-container">
       <button class="like-btn" id="like-btn">Like</button>
       <span id="like-count">0</span>
-
       <div style="position:relative;">
         <button class="share-btn" id="share-btn">Condividi</button>
         <div class="share-popup" id="share-popup">
@@ -1173,17 +1180,10 @@
         </div>
       </div>
     </div>
-
-    <div style="position:relative; padding-top:56.25%; margin-top:10px;">
-      <iframe 
-        src="https://www.youtube.com/embed/vJsiPNdQCzk"
-        title="CaCO3"
-        allowfullscreen
-        style="position:absolute; top:0; left:0; width:100%; height:100%; border:none;"
-      ></iframe>
-    </div>
   </div>
 </div>
+
+
 
 <!-- MODAL IMG FULLSCREEN -->
 <div class="modal-overlay" id="img-modal">
@@ -1264,7 +1264,13 @@ const closeBtns = document.querySelectorAll('.modal-close');
 closeBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     const targ = btn.dataset.close;
-    document.getElementById(targ).classList.remove('active');
+    const modal = document.getElementById(targ);
+	modal.classList.remove('active');
+	if(modal.classList.contains('video-modal')){
+	modal.querySelectorAll('iframe').forEach(iframe => {
+		iframe.src = "";
+	});
+   }
   });
 });
 function closeAllModals(){
@@ -1276,10 +1282,10 @@ function closeAllModals(){
 /***********************/
 const imgModal = document.getElementById('img-modal');
 const imgModalImg = document.getElementById('img-modal-img');
-const ultrsky01Img = document.getElementById('ultrsky01-img');
-if(ultrsky01Img){
-  ultrsky01Img.addEventListener('click', () => {
-    imgModalImg.src = ultrsky01Img.src;
+const ultrasky01Img = document.getElementById('ultrasky01-img');
+if(ultrasky01Img){
+  ultrasky01Img.addEventListener('click', () => {
+    imgModalImg.src = ultrasky01Img.src;
     imgModal.classList.add('active');
   });
 }
@@ -1325,9 +1331,9 @@ document.getElementById('back-artisti').addEventListener('click', () => {
 let currentLang = "it";
 const translations = {
   it: {
-    welcomeTitle: "Benvenuti in Ultrasky",
+    welcomeTitle: "Benvenuti in ULTRASKY",
     welcomeDesc: "Scopri la mostra dedicata al Blu Egizio ...",
-    ultrsky01Title: "ULTRSKY 01 - Approfondimento",
+    ultrasky01Title: "Approfondimento",
     likeBtn: "Like",
     shareBtn: "Condividi",
     readMore: "Continua a leggere",
@@ -1336,9 +1342,9 @@ const translations = {
     playBtn: "Gioca con il Blu Egizio"
   },
   en: {
-    welcomeTitle: "Welcome to Ultrasky",
+    welcomeTitle: "Welcome to ULTRASKY",
     welcomeDesc: "Discover the exhibition dedicated to Egyptian Blue ...",
-    ultrsky01Title: "ULTRSKY 01 - Insights",
+    ultrasky01Title: "Insights",
     likeBtn: "Like",
     shareBtn: "Share",
     readMore: "Read more",
@@ -1347,9 +1353,9 @@ const translations = {
     playBtn: "Play with Egyptian Blue"
   },
   kid: {
-    welcomeTitle: "Ciao Ragazzi, benvenuti a Ultrasky!",
+    welcomeTitle: "Ciao Ragazzi, benvenuti a ULTRASKY!",
     welcomeDesc: "Scopri il Blu Egizio con giochi e curiosità!",
-    ultrsky01Title: "ULTRSKY 01 - Racconto",
+    ultrasky01Title: "Racconto",
     likeBtn: "Mi piace!",
     shareBtn: "Condividi",
     readMore: "Leggi di più",
@@ -1381,7 +1387,7 @@ function updateLanguage(lang){
   // Aggiorno i testi home
   document.getElementById('welcome-title').textContent = t.welcomeTitle;
   document.getElementById('welcome-desc').textContent  = t.welcomeDesc;
-  document.getElementById('ultrsky01-title').textContent = t.ultrsky01Title;
+  document.getElementById('ultrasky01-title').textContent = t.ultrasky01Title;
 
   // Bottoni vari
   const likeB = document.getElementById('like-btn');
@@ -1401,8 +1407,8 @@ function updateLanguage(lang){
     }
   });
 
-  // Ricarico le card ULTRSKY
-  refreshUltrskyCards();
+  // Ricarico le card ULTRASKY
+  refreshUltraskyCards();
 }
 
 /***********************/
@@ -1429,16 +1435,65 @@ const artistsData = [
   {
     nameIT: "Viola Alpi",
     nameEN: "Viola Alpi",
-    photo: "https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/alpi_image.jpg",
-    textIT: "https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/viola%20alpi.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/grandtour/main/artisti/testi/Viola%20Alpi_en.txt"
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/alpi_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/alpi_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/alpi_en.txt"
   },
   {
     nameIT: "CaCO3",
     nameEN: "CaCO3",
-    photo: "https://www.cifram.it/ultrasky/artisti/img_artisti/caco3_image.jpg",
-    textIT: "https:///www.cifram.it/ultrasky/artisti/testi_artisti/caco3_it.txt",
-    textEN: "https:///www.cifram.it/ultrasky/artisti/testi_artisti/caco3_en.txt"
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/caco3_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/caco3_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/caco3_en.txt"
+  },
+  {
+    nameIT: "Andrea Chidichimo",
+    nameEN: "Andrea Chidichimo",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/chidichimo_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/chidichimo_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/chidichimo_en.txt"
+  },
+  {
+    nameIT: "Conticelli",
+    nameEN: "Conticelli",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/conticelli_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/conticelli_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/conticelli_en.txt"
+  },
+  {
+    nameIT: "Giuman",
+    nameEN: "Giuman",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/giuman_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/giuman_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/giuman_en.txt"
+  },
+  {
+    nameIT: "Kamilia Kard",
+    nameEN: "Kamilia Kard",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/kard_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/kard_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/kard_en.txt"
+  },
+  {
+    nameIT: "Peducci",
+    nameEN: "Peducci",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/peducci_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/peducci_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/peducci_en.txt"
+  },
+  {
+    nameIT: "Tamborini",
+    nameEN: "Tamborini",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/tamborini_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/tamborini_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/tamborini_en.txt"
+  },
+  {
+    nameIT: "Franco Vitelli",
+    nameEN: "Franco Vitelli",
+    photo: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/vitelli_image.jpg",
+    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/vitelli_it.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/artisti/testi/vitelli_en.txt"
   }
 ];
 artistsData.forEach(artist => {
@@ -1471,46 +1526,61 @@ artistsData.forEach(artist => {
 });
 
 /***********************/
-/*   ULTRSKY           */
+/*   ULTRASKY           */
 /***********************/
-const ultrskyListEl = document.getElementById('exhibition-list');
-const caco3TextIT = "https://raw.githubusercontent.com/gfq40/grandtour/main/text/caco3_it.txt";
-const caco3TextEN = "https://raw.githubusercontent.com/gfq40/grandtour/main/text/caco3_en.txt";
 
-const ultrskyPieces = [
-  {
-    id: 1,
-    titleIT: "ULTRSKY 01",
-    descIT: "Approfondimento su micromosaico e CACO3.",
-    titleEN: "ULTRSKY 01",
-    descEN: "Insights on micro-mosaic and CACO3.",
-    audioIT: "https://raw.githubusercontent.com/gfq40/grandtour/main/audio/caco3_it.mp3",
-    audioEN: "https://raw.githubusercontent.com/gfq40/grandtour/main/audio/caco3_en.mp3",
-    hasExtended: true
-  },
-  {
-    id: 2,
-    titleIT: "ULTRSKY 02",
-    descIT: "Un turbinio di colori e particelle in danza cosmica.",
-    titleEN: "ULTRSKY 02",
-    descEN: "A swirl of colors and cosmic dance.",
-    audioIT: "",
-    audioEN: ""
-  },
-  {
-    id: 20,
-    titleIT: "ULTRSKY 20",
-    descIT: "Polittico monumentale, scene cosmiche e simboli alchemici...",
-    titleEN: "ULTRSKY 20",
-    descEN: "Monumental polyptych, cosmic scenes & alchemical symbols...",
-    audioIT: "",
-    audioEN: ""
-  }
+
+/***********************/
+/*   bisogna sistemare questa parte di codice inserendo due variabile TextIT e TexrEN che siano uuniche e si vadano a prender i testi nella cartella corretta          */
+/***********************/
+const ultraskyListEl = document.getElementById('exhibition-list');
+const TextIT1 = "https://raw.githubusercontent.com/gfq40/ultrasky/main/text/1/1_it.txt";
+const TextEN1 = "https://raw.githubusercontent.com/gfq40/ultrasky/main/text/1/1_en.txt";
+const TextIT2 = "https://raw.githubusercontent.com/gfq40/ultrasky/main/text/2/2_it.txt";
+const TextEN2 = "https://raw.githubusercontent.com/gfq40/ultrasky/main/text/2/2_en.txt";
+
+const ultraskyPieces = [
+
+{
+  id: 0,
+  titleIT: "ULTRASKY 00",
+  descIT: "Approfondimento", 
+  titleEN: "ULTRASKY 00",
+  descEN: "Insights",
+  audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/it/adulti/audio.mp3",
+  audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/en/adult/audio.mp3",
+  audioKid:   "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/it/ragazzi/audio.mp3",
+  textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/it/adulti/testo.txt",
+  textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/en/adult/testo.txt",
+  textKid: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/it/ragazzi/testo.txt",
+  videoURL: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/03_video.mp4/embed/VIDEO_ID_3",
+  hasExtended: true,  // <-- Virgola aggiunta qui
+  img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/03.jpg" // URL immagine per scheda 1
+},
+
+{
+  id: 3,
+  titleIT: "ULTRASKY 03",
+  descIT: "Approfondimento", 
+  titleEN: "ULTRASKY 03",
+  descEN: "Insights",
+  audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/it/adulti/audio.mp3",
+  audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/en/adult/audio.mp3",
+  audioKid:   "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/it/ragazzi/audio.mp3",
+  textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/it/adulti/testo.txt",
+  textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/en/adult/testo.txt",
+  textKid: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/it/ragazzi/testo.txt",
+  videoURL: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/03_video.mp4/embed/VIDEO_ID_3",
+  hasExtended: true,  // <-- Virgola aggiunta qui
+  img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/03.jpg" // URL immagine per scheda 1
+},
+
+  // ... continua per le altre schede (ULTRASKY 03, 04, ... 20)
 ];
 
-function refreshUltrskyCards(){
-  ultrskyListEl.innerHTML = "";
-  ultrskyPieces.forEach(piece => {
+function refreshUltraskyCards(){
+  ultraskyListEl.innerHTML = "";
+  ultraskyPieces.forEach(piece => {
     const card = document.createElement('div');
     card.className = 'piece-card';
 
@@ -1522,7 +1592,14 @@ function refreshUltrskyCards(){
     dsc.className = 'piece-desc';
     dsc.textContent = (currentLang === "it" || currentLang === "kid") ? piece.descIT : piece.descEN;
 
-    const audioEl = document.createElement('audio');
+    // CREA L'IMMAGINE
+	const imgEl = document.createElement('img');
+	imgEl.src = piece.img;
+	imgEl.alt = (currentLang === "it" || currentLang === "kid") ? piece.titleIT : piece.titleEN;
+	imgEl.style.width = "100%";  // Imposta la dimensione che preferisci
+	card.appendChild(imgEl);
+
+	const audioEl = document.createElement('audio');
     audioEl.style.display = 'none';
     audioEl.controls = true;
 
@@ -1543,55 +1620,93 @@ function refreshUltrskyCards(){
     card.appendChild(speakBtn);
     card.appendChild(audioEl);
 
-    // ULTRSKY 01 - approfondimento
+    // Esempio: approfondimento per la schede
     card.addEventListener('click', () => {
-      if(piece.id === 1 && piece.hasExtended){
-        fetch((currentLang === "it" || currentLang === "kid") ? caco3TextIT : caco3TextEN)
-          .then(res => res.text())
-          .then(txt => {
-            let shortLen = 200;
-            let shortText = txt.substring(0, shortLen);
-            let fullText  = txt.substring(shortLen);
+  if(piece.hasExtended){
+    let url = "";
+    if(currentLang === "kid"){
+      url = piece.textKid;
+    } else if(currentLang === "it"){
+      url = piece.textIT;
+    } else if(currentLang === "en"){
+      url = piece.textEN;
+    }
+    fetch(url)
+      .then(res => res.text())
+      .then(txt => {
+        let shortLen = 200;
+        let shortText = txt.substring(0, shortLen);
+        let fullText  = txt.substring(shortLen);
 
-            document.getElementById('ultrsky01-short').textContent = shortText.trim() + "...";
-            document.getElementById('ultrsky01-full').textContent = fullText.trim();
+        // Imposta il testo nella modal (nota: qui usiamo id fissi; per supportare più schede, valuta una modal generica)
+        document.getElementById('ultrasky01-short').textContent = shortText.trim() + "...";
+        document.getElementById('ultrasky01-full').textContent = fullText.trim();
 
-            if(fullText.trim().length < 10){
-              document.getElementById('read-more-btn').style.display = 'none';
-              document.getElementById('reduce-btn').style.display = 'none';
-            } else {
-              document.getElementById('read-more-btn').style.display = 'inline';
-              document.getElementById('reduce-btn').style.display = 'none';
-              document.getElementById('ultrsky01-full').style.display = 'none';
-            }
+        if(fullText.trim().length < 10){
+          document.getElementById('read-more-btn').style.display = 'none';
+          document.getElementById('reduce-btn').style.display = 'none';
+        } else {
+          document.getElementById('read-more-btn').style.display = 'inline';
+          document.getElementById('reduce-btn').style.display = 'none';
+          document.getElementById('ultrasky01-full').style.display = 'none';
+        }
 
-            closeAllModals();
-            document.getElementById('modal-ultrsky01-extended').classList.add('active');
-          })
-          .catch(err => console.error("fetch caco3 text error:", err));
-      }
-    });
+        if(piece.videoURL){
+		  console.log("Imposto video-iframe.src con:", piece.videoURL);
+		  document.getElementById('video-iframe').src = piece.videoURL;
+		  document.getElementById('video-container').style.display = 'block';
+		} else {
+		  console.log("Nessun video URL trovato.");
+		  document.getElementById('video-container').style.display = 'none';
+		  document.getElementById('video-iframe').src = "";
+		}
+  
+        closeAllModals();
+        document.getElementById('modal-ultrasky01-extended').classList.add('active');
+      })
+      .catch(err => console.error("fetch text error:", err));
+  }
+});
+    
+    // Se necessario, aggiungi altri event listener per ulteriori schede
 
-    ultrskyListEl.appendChild(card);
+    ultraskyListEl.appendChild(card);
   });
 }
 
 function toggleAudio(btn, audioEl, piece){
   if(btn.dataset.playing === "false"){
     audioEl.currentTime = 0;
-    audioEl.src = ((currentLang === "it" || currentLang === "kid") ? piece.audioIT : piece.audioEN) || "";
+    if(isKidMode){
+      audioEl.src = piece.audioKid;
+    } else if(currentLang === "en"){
+      audioEl.src = piece.audioEN;
+    } else {
+      audioEl.src = piece.audioAdult;
+    }
     audioEl.play();
     btn.dataset.playing = "true";
-    btn.textContent = (currentLang === "it" || currentLang === "kid") ? "Interrompi" : "Stop";
+    if(isKidMode){
+      btn.textContent = "Interrompi (Kid)";
+    } else if(currentLang === "en"){
+      btn.textContent = "Stop (EN)";
+    } else {
+      btn.textContent = "Interrompi (Adult)";
+    }
   } else {
     audioEl.pause();
     audioEl.currentTime = 0;
     btn.dataset.playing = "false";
-    btn.textContent = (currentLang === "it" || currentLang === "kid")
-      ? translations[currentLang].speakBtn
-      : translations.en.speakBtn;
+    if(isKidMode){
+      btn.textContent = translations["kid"].speakBtn;
+    } else if(currentLang === "en"){
+      btn.textContent = translations["en"].speakBtn;
+    } else {
+      btn.textContent = translations["it"].speakBtn;
+    }
   }
 }
+
 
 /***********************/
 /*   LIKE & SHARE      */
@@ -1599,7 +1714,7 @@ function toggleAudio(btn, audioEl, piece){
 let likeCount = 0;
 const likeBtn = document.getElementById('like-btn');
 const likeCountSpan = document.getElementById('like-count');
-const liked = localStorage.getItem('ultrsky01_liked'); 
+const liked = localStorage.getItem('ultrasky01_liked'); 
 if(liked === 'true'){
   likeCount = 1;
   if(likeCountSpan) likeCountSpan.textContent = likeCount;
@@ -1610,19 +1725,19 @@ if(liked === 'true'){
 }
 if(likeBtn){
   likeBtn.addEventListener('click', () => {
-    if(!localStorage.getItem('ultrsky01_liked')){
+    if(!localStorage.getItem('ultrasky01_liked')){
       likeCount++;
       if(likeCountSpan) likeCountSpan.textContent = likeCount;
       likeBtn.disabled = true;
       likeBtn.textContent = "Liked!";
-      localStorage.setItem('ultrsky01_liked', 'true');
+      localStorage.setItem('ultrasky01_liked', 'true');
     }
   });
 }
 
 const shareBtn = document.getElementById('share-btn');
 const sharePopup = document.getElementById('share-popup');
-const photoURL = "https://mywebsite.com/foto-ultrsky01.jpg";
+const photoURL = "https://mywebsite.com/foto-ultrasky01.jpg";
 
 if(shareBtn){
   shareBtn.addEventListener('click', (e) => {
@@ -1657,8 +1772,8 @@ document.querySelectorAll('.share-icon').forEach(icon => {
 /***********************/
 const readMoreBtn = document.getElementById('read-more-btn');
 const reduceBtn = document.getElementById('reduce-btn');
-const shortDiv = document.getElementById('ultrsky01-short');
-const fullDiv = document.getElementById('ultrsky01-full');
+const shortDiv = document.getElementById('ultrasky01-short');
+const fullDiv = document.getElementById('ultrasky01-full');
 
 if(readMoreBtn){
   readMoreBtn.addEventListener('click', () => {
@@ -1721,43 +1836,43 @@ document.getElementById('btn-back-chimico').addEventListener('click', () => {
 const menuItems = [
   {
     id: "menu-blu-egizio",
-    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/alla_scoperta_del_blu_egizio.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/alla_scoperta_del_blu_egizio_en.txt",
+    textIT: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/alla_scoperta_del_blu_egizio.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/alla_scoperta_del_blu_egizio_en.txt",
     titleIT: "Alla scoperta del Blu Egizio",
     titleEN: "Discovering Egyptian Blue"
   },
   {
     id: "menu-storia",
-    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_storia.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_storia_en.txt",
+    textIT: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/la_storia.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/la_storia_en.txt",
     titleIT: "La Storia",
     titleEN: "History"
   },
   {
     id: "menu-scienza",
-    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_scienza.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/la_scienza_en.txt",
+    textIT: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/la_scienza.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/la_scienza_en.txt",
     titleIT: "La Scienza",
     titleEN: "Science"
   },
   {
     id: "menu-arti",
-    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/le_arti.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/le_arti_en.txt",
+    textIT: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/le_arti.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/le_arti_en.txt",
     titleIT: "Le Arti",
     titleEN: "Arts"
   },
   {
     id: "menu-programma",
-    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/programma.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/programma_en.txt",
+    textIT: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/programma.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/programma_en.txt",
     titleIT: "Programma",
     titleEN: "Program"
   },
   {
     id: "menu-contatti",
-    textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/contatti.txt",
-    textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/testi_menu/contatti_en.txt",
+    textIT: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/contatti.txt",
+    textEN: "https://raw.githubusercontent.com/gfq40/ULTRASKY/main/testi_menu/contatti_en.txt",
     titleIT: "Contatti",
     titleEN: "Contacts"
   }
@@ -1801,7 +1916,7 @@ function startApp(){
   kidsGameSection.style.display = 'none';
   btnBackSelection.style.display = 'inline-block';
 
-  refreshUltrskyCards();
+  refreshUltraskyCards();
 }
 
 function init(){
@@ -1882,7 +1997,7 @@ const synonymsStoria = ["storia"];
 const synonymsScienza = ["scienza"];
 const synonymsArti = ["arti", "le arti"];
 const synonymsBluEgizio = ["blu", "blu egizio", "scoperta"];
-const synonymsUltrsky01 = ["ultrsky 01", "ultrasky01", "ultra sky 01"];
+const synonymsUltrasky01 = ["ultrasky 01", "ULTRASKY01", "ultra sky 01"];
 const synonymsArtistCaco3 = ["caco3", "c a c o 3"];
 const synonymsArtistViola = ["viola", "viola alpi"];
 
@@ -1916,10 +2031,10 @@ function checkShowBluEgizio(transcript){
   const hasBlu = partialFuzzyMatch(words, synonymsBluEgizio, 2);
   return (hasAction && hasBlu);
 }
-function checkListenUltrsky01(transcript){
+function checkListenUltrasky01(transcript){
   const words = transcript.split(/\s+/);
   const hasListen = partialFuzzyMatch(words, synonymsActionListen, 2);
-  const hasU01 = partialFuzzyMatch(words, synonymsUltrsky01, 2);
+  const hasU01 = partialFuzzyMatch(words, synonymsUltrasky01, 2);
   return (hasListen && hasU01);
 }
 function checkShowArtistCaco3(transcript){
@@ -1942,8 +2057,8 @@ function loadMenu(menuId){
   if(el) el.click();
 }
 
-function playUltrsky01Audio(){
-  console.log(">> Audio ULTRSKY 01 in riproduzione (implementa la tua logica)");
+function playUltrasky01Audio(){
+  console.log(">> Audio ULTRASKY 01 in riproduzione (implementa la tua logica)");
   hideAllSections();
   exhibitionListEl.style.display = 'flex';
 }
