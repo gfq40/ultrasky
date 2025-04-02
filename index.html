@@ -12,6 +12,7 @@
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap"
   />
 
+
   <style>
     :root {
       --color-bg-start: #06121f;
@@ -829,6 +830,21 @@
     body.kid-mode .menu-container li {
       color: #fff !important;
     }
+	@media (max-width: 768px) {
+  #artists-section {
+    padding-bottom: 80px; /* spazio extra per evitare la sovrapposizione */
+  }
+  @media (max-width: 768px) {
+  #exhibition-list {
+    padding-bottom: 80px; /* o un valore che preferisci per lasciare spazio sufficiente */
+  }
+  /* Classe per zoom */
+.zoomed {
+  transform: scale(1.5);
+  transition: transform 0.3s ease;
+  cursor: zoom-out;
+}
+
   </style>
 </head>
 <body>
@@ -1137,7 +1153,7 @@
 </main>
 
 <div class="bottom-bar">
-  <p style="margin:0;">© 2024 ULTRASKY - All Rights Reserved</p>
+  <p style="margin:0;">© 2025 ULTRASKY - by: ScalaQuaranta</p>
 </div>
 
 <!-- MODAL ARTISTA -->
@@ -1156,12 +1172,19 @@ ad una variabile che va da 0 a 8-->
   <div class="modal-content" style="max-width:600px; position:relative;">
     <button class="modal-close" data-close="modal-ultrasky01-extended">X</button>
     <h2 id="ultrasky01-title">ULTRASKY 01 - Approfondimento</h2>
-
-    <div id="ultrasky01-short"></div>
-    <button class="read-more-btn" id="read-more-btn" style="margin-bottom:10px; display:none;">Continua a leggere</button>
-
-    <div id="ultrasky01-full"></div>
+	
+	<div id="ultrasky01-short"></div>
+	<button class="read-more-btn" id="read-more-btn" style="margin-bottom:10px; display:none;">Continua a leggere</button>
+	
+	    <div id="ultrasky01-full"></div>
     <button class="read-more-btn" id="reduce-btn" style="display:none; margin-top:10px;">Riduci testo</button>
+	
+	<img id="extended-img" src="" alt="Immagine di approfondimento" style="width:100%; cursor:pointer; margin-bottom:10px;">
+    
+	
+
+
+
 <!-- Inserisci qui il blocco per il video dinamico -->
 <div id="video-container" style="position:relative; padding-top:56.25%; margin-top:10px; display:none;">
       <iframe id="video-iframe" src="" title="Video" allowfullscreen
@@ -1282,6 +1305,10 @@ function closeAllModals(){
 /***********************/
 const imgModal = document.getElementById('img-modal');
 const imgModalImg = document.getElementById('img-modal-img');
+imgModalImg.addEventListener('click', function() {
+  this.classList.toggle('zoomed');
+});
+
 const ultrasky01Img = document.getElementById('ultrasky01-img');
 if(ultrasky01Img){
   ultrasky01Img.addEventListener('click', () => {
@@ -1295,6 +1322,13 @@ if(imgModal){
       imgModal.classList.remove('active');
       imgModalImg.src = "";
     }
+  });
+}
+const extendedImg = document.getElementById('extended-img');
+if(extendedImg){
+  extendedImg.addEventListener('click', () => {
+    imgModalImg.src = extendedImg.src;
+    imgModal.classList.add('active');
   });
 }
 
@@ -1339,7 +1373,9 @@ const translations = {
     readMore: "Continua a leggere",
     reduceText: "Riduci testo",
     speakBtn: "Ascolta",
-    playBtn: "Gioca con il Blu Egizio"
+    playBtn: "Gioca con il Blu Egizio",
+	backSelection: "Torna alla Scelta",             // Nuova proprietà
+    exhibitionIntro: "Segui il percorso museale",      // Nuova proprietà
   },
   en: {
     welcomeTitle: "Welcome to ULTRASKY",
@@ -1350,7 +1386,9 @@ const translations = {
     readMore: "Read more",
     reduceText: "Reduce text",
     speakBtn: "Listen",
-    playBtn: "Play with Egyptian Blue"
+    playBtn: "Play with Egyptian Blue",
+	backSelection: "Back to Selection",              // Nuova proprietà
+    exhibitionIntro: "Follow the exhibition route",   // Nuova proprietà
   },
   kid: {
     welcomeTitle: "Ciao Ragazzi, benvenuti a ULTRASKY!",
@@ -1361,7 +1399,9 @@ const translations = {
     readMore: "Leggi di più",
     reduceText: "Riduci",
     speakBtn: "Ascolta",
-    playBtn: "Gioca con il Blu Egizio"
+    playBtn: "Gioca con il Blu Egizio",
+	backSelection: "Torna alla Scelta",             // Nuova proprietà
+    exhibitionIntro: "Segui il percorso museale",      // Nuova proprietà
   }
 };
 
@@ -1389,6 +1429,13 @@ function updateLanguage(lang){
   document.getElementById('welcome-desc').textContent  = t.welcomeDesc;
   document.getElementById('ultrasky01-title').textContent = t.ultrasky01Title;
 
+  // Aggiorno il pulsante "Torna alla Scelta"
+  document.getElementById('btn-back-selection').textContent = t.backSelection;
+  
+  // Aggiorno il titolo "Segui il percorso museale"
+  // Se non vuoi modificare altre eventuali istanze, usa querySelector per il primo elemento con classe exhibition-intro:
+  document.querySelector('.exhibition-intro').textContent = t.exhibitionIntro;
+  
   // Bottoni vari
   const likeB = document.getElementById('like-btn');
   if(likeB) likeB.textContent = t.likeBtn;
@@ -1558,6 +1605,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky00/00.jpeg" // URL immagine per scheda 1
 },
 
+/*Tamborini*/
+
 {
   id: 1,
   titleIT: "ULTRASKY 01",
@@ -1574,6 +1623,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky01/01.jpg" // URL immagine per scheda 1
 },
+
+/*Franco*/
 
 {
   id: 2,
@@ -1592,6 +1643,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky02/02.jpg" // URL immagine per scheda 1
 },
 
+/*Franco*/
+
 {
   id: 3,
   titleIT: "ULTRASKY 03",
@@ -1608,6 +1661,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky03/03.jpg" // URL immagine per scheda 1
 },
+
+/*Franco*/
 
 {
   id: 4,
@@ -1626,12 +1681,14 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky04/04.jpg" // URL immagine per scheda 1
 },
 
+/*Dio Bes*/
+
 {
   id: 5,
-  titleIT: "ULTRASKY 05",
-  descIT: "Approfondimento", 
-  titleEN: "ULTRASKY 05",
-  descEN: "Insights",
+  titleIT: "ULTRASKY",
+  descIT: "Bes", 
+  titleEN: "ULTRASKY",
+  descEN: "Bes",
   audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky05/it/adulti/audio.mp3",
   audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky05/en/adult/audio.mp3",
   audioKid:   "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky05/it/ragazzi/audio.mp3",
@@ -1642,6 +1699,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky05/05.jpg" // URL immagine per scheda 1
 },
+
+/*Conticelli*/
 
 {
   id: 6,
@@ -1660,12 +1719,14 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky06/06.jpg" // URL immagine per scheda 1
 },
 
+/*Soglia Nilotica*/
+
 {
   id: 7,
-  titleIT: "ULTRASKY 07",
-  descIT: "Approfondimento", 
-  titleEN: "ULTRASKY 07",
-  descEN: "Insights",
+  titleIT: "ULTRASKY",
+  descIT: "Soglia nilotica", 
+  titleEN: "UTRASKY",
+  descEN: "Nile threshold",
   audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky07/it/adulti/audio.mp3",
   audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky07/en/adult/audio.mp3",
   audioKid:   "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky07/it/ragazzi/audio.mp3",
@@ -1676,6 +1737,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky07/07.jpg" // URL immagine per scheda 1
 },
+
+/*Chidichimo*/
 
 {
   id: 8,
@@ -1694,6 +1757,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky08/08.jpg" // URL immagine per scheda 1
 },
 
+/*Chidichimo*/
+
 {
   id: 9,
   titleIT: "ULTRASKY 09",
@@ -1711,11 +1776,13 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky09/09.jpg" // URL immagine per scheda 1
 },
 
+/*Pallette di blu egizio*/
+
 {
   id: 10,
-  titleIT: "ULTRASKY 10",
+  titleIT: "Il blu egizio nella pittura",
   descIT: "Approfondimento", 
-  titleEN: "ULTRASKY 10",
+  titleEN: "Egyptian blue in painting",
   descEN: "Insights",
   audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky10/it/adulti/audio.mp3",
   audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky10/en/adult/audio.mp3",
@@ -1727,6 +1794,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky10/10.jpg" // URL immagine per scheda 1
 },
+
+/*Giuseppe*/
 
 {
   id: 11,
@@ -1745,6 +1814,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky11/11.jpg" // URL immagine per scheda 1
 },
 
+/*Giuseppe*/
+
 {
   id: 12,
   titleIT: "ULTRASKY 12",
@@ -1761,6 +1832,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky12/12.jpg" // URL immagine per scheda 1
 },
+
+/*Stefano*/
 
 {
   id: 13,
@@ -1779,6 +1852,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky13/13.jpg" // URL immagine per scheda 1
 },
 
+/*Alpi*/
+
 {
   id: 14,
   titleIT: "ULTRASKY 14",
@@ -1795,6 +1870,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky14/14.jpg" // URL immagine per scheda 1
 },
+
+/*Alpi*/
 
 {
   id: 15,
@@ -1813,6 +1890,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky15/15.jpg" // URL immagine per scheda 1
 },
 
+/*Alpi*/
+
 {
   id: 16,
   titleIT: "ULTRASKY 16",
@@ -1829,6 +1908,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky16/16.jpg" // URL immagine per scheda 1
 },
+
+/*Peducci*/
 
 {
   id: 17,
@@ -1847,6 +1928,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky17/17.jpg" // URL immagine per scheda 1
 },
 
+/*Peducci*/
+
 {
   id: 18,
   titleIT: "ULTRASKY 18",
@@ -1863,6 +1946,8 @@ const ultraskyPieces = [
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky18/18.jpg" // URL immagine per scheda 1
 },
+
+/*Giuman*/
 
 {
   id: 19,
@@ -1881,6 +1966,8 @@ const ultraskyPieces = [
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky19/19.jpg" // URL immagine per scheda 1
 },
 
+/*Giuman*/
+
 {
   id: 20,
   titleIT: "ULTRASKY 20",
@@ -1896,6 +1983,44 @@ const ultraskyPieces = [
   videoURL: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky20/03_video.mp4/embed/VIDEO_ID_3",
   hasExtended: true,  // <-- Virgola aggiunta qui
   img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky20/20.jpg" // URL immagine per scheda 1
+},
+
+/*Giuman*/
+
+{
+  id: 21,
+  titleIT: "ULTRASKY 21",
+  descIT: "Approfondimento", 
+  titleEN: "ULTRASKY 21",
+  descEN: "Insights",
+  audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/it/adulti/audio.mp3",
+  audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/en/adult/audio.mp3",
+  audioKid:   "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/it/ragazzi/audio.mp3",
+  textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/it/adulti/testo.txt",
+  textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/en/adult/testo.txt",
+  textKid: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/it/ragazzi/testo.txt",
+  videoURL: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/03_video.mp4/embed/VIDEO_ID_3",
+  hasExtended: true,  // <-- Virgola aggiunta qui
+  img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky21/21.jpg" // URL immagine per scheda 1
+},
+
+/*Tamborini*/
+
+{
+  id: 22,
+  titleIT: "ULTRASKY 22",
+  descIT: "Approfondimento", 
+  titleEN: "ULTRASKY 22",
+  descEN: "Insights",
+  audioAdult: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/it/adulti/audio.mp3",
+  audioEN:    "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/en/adult/audio.mp3",
+  audioKid:   "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/it/ragazzi/audio.mp3",
+  textIT: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/it/adulti/testo.txt",
+  textEN: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/en/adult/testo.txt",
+  textKid: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/it/ragazzi/testo.txt",
+  videoURL: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky22/03_video.mp4/embed/VIDEO_ID_3",
+  hasExtended: true,  // <-- Virgola aggiunta qui
+  img: "https://raw.githubusercontent.com/gfq40/ultrasky/main/ultrasky20/22.jpg" // URL immagine per scheda 1
 },
 
   // ... continua per le altre schede (ULTRASKY 03, 04, ... 20)
@@ -1983,7 +2108,7 @@ function refreshUltraskyCards(){
 		  document.getElementById('video-container').style.display = 'none';
 		  document.getElementById('video-iframe').src = "";
 		}
-  
+		document.getElementById('extended-img').src = piece.img;
         closeAllModals();
         document.getElementById('modal-ultrasky01-extended').classList.add('active');
       })
